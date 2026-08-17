@@ -1,0 +1,34 @@
+version: 2
+
+models:
+
+  - name: business_metrics
+    description: >
+      Governed business metrics for the MetricMind semantic analytics layer.
+      These metrics are calculated from the FCT_SALES model.
+
+    columns:
+
+      - name: total_sales
+        description: >
+          Total sales generated across all orders.
+          Calculated as the sum of the SALES column.
+
+      - name: total_revenue
+        description: >
+          Total revenue generated across all orders.
+          Currently defined as the sum of the SALES column.
+
+      - name: total_profit
+        description: >
+          Total profit generated across all orders.
+          Calculated as the sum of the PROFIT column.
+
+      - name: total_quantity
+        description: >
+          Total quantity of products sold.
+          Calculated as the sum of the QUANTITY column.
+
+      - name: profit_margin
+        description: >
+          Overall profit margin calculated as total profit divided by total sales.
