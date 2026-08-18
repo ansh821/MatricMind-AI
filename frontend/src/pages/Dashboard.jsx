@@ -12,6 +12,7 @@ function Dashboard({
   dashboardMetrics,
   metricsLoading,
   metricsError,
+  onRefresh,
 
   question,
   setQuestion,
@@ -26,6 +27,7 @@ function Dashboard({
 
   formatCurrency,
   formatPercentage,
+  
 }) {
   return (
     <div className="app">
@@ -35,7 +37,15 @@ function Dashboard({
       <main className="main-content">
 
         <Header />
-
+        <div className="refresh-container">
+          <button
+            className="date-button"
+            onClick={onRefresh}
+            disabled={metricsLoading}
+          >
+            {metricsLoading ? "Refreshing..." : "↻ Refresh Data"}
+          </button>
+        </div>
         {/* Metric Cards */}
         <section className="metrics-grid">
 

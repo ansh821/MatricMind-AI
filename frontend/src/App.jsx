@@ -26,6 +26,41 @@ function App() {
   const [revenueTrendData, setRevenueTrendData] = useState([]);
   const [topProductsData, setTopProductsData] = useState([]);
 
+  const loadDashboardData = async () => {
+    try {
+      setMetricsLoading(true);
+      setMetricsError("");
+
+      const [
+        metrics,
+        regions,
+        profits,
+        trend,
+        products,
+      ] = await Promise.all([
+        getDashboardMetrics(),
+        getRevenueByRegion(),
+        getProfitByCategory(),
+        getRevenueTrend(),
+        getTopProducts(),
+      ]);
+
+      setDashboardMetrics(metrics);
+      setRegionData(regions);
+      setProfitData(profits);
+      setRevenueTrendData(trend);
+      setTopProductsData(products);
+
+    } catch (error) {
+      console.error("Dashboard API Error:", error);
+
+      setMetricsError(
+        "Unable to load dashboard data."
+      );
+    } finally {
+      setMetricsLoading(false);
+    }
+  };
   // -----------------------------------------
   // Load Dashboard Data
   // -----------------------------------------
@@ -131,6 +166,7 @@ function App() {
       dashboardMetrics={dashboardMetrics}
       metricsLoading={metricsLoading}
       metricsError={metricsError}
+      oneRefresh={loadDashboardData}
 
       question={question}
       setQuestion={setQuestion}
@@ -145,6 +181,8 @@ function App() {
 
       formatCurrency={formatCurrency}
       formatPercentage={formatPercentage}
+
+      onRefresh={loadDashboardData}
     />
   );
 }
