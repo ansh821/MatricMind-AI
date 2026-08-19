@@ -315,11 +315,18 @@ def get_metrics():
 # --------------------------------------------------
 # Total Revenue, Profit and Profit Margin
 # --------------------------------------------------
-
 @app.get("/metrics/summary")
 def metrics_summary():
+    try:
+        return get_total_summary()
 
-    return get_total_summary()
+    except Exception as e:
+        return {
+            "success": False,
+            "error": "Unable to fetch dashboard summary.",
+            "details": str(e)
+        }
+
 
 
 # --------------------------------------------------
@@ -328,8 +335,14 @@ def metrics_summary():
 
 @app.get("/metrics/revenue-by-region")
 def revenue_by_region():
-
-    return get_revenue_by_region()
+    try:
+        return get_revenue_by_region()
+    except Exception as e:
+        return {
+            "success": False,
+            "error": "Unable to fetch revenue by region.",
+            "details": str(e)
+        }
 
 
 # --------------------------------------------------
@@ -338,9 +351,14 @@ def revenue_by_region():
 
 @app.get("/metrics/category-performance")
 def category_performance():
-
-    return get_category_performance()
-
+    try:
+        return get_category_performance()
+    except Exception as e:
+        return {
+            "success": False,
+            "error": "Unable to fetch category performance.",
+            "details": str(e)
+        }
 
 # --------------------------------------------------
 # Top 10 Profitable Products
@@ -355,12 +373,33 @@ def top_profitable_products():
 
 @app.get("/metrics/profit-by-category")
 def profit_by_category():
-    return get_profit_by_category()
+    try:
+        return get_profit_by_category()
+    except Exception as e:
+        return {
+            "success": False,
+            "error": "Unable to fetch profit by category.",
+            "details": str(e)
+        }
 
 @app.get("/metrics/revenue-trend")
 def revenue_trend():
-    return get_revenue_trend()
-
+    try:
+        return get_revenue_trend()
+    except Exception as e:
+        return {
+            "success": False,
+            "error": "Unable to fetch revenue trend.",
+            "details": str(e)
+        }
+    
 @app.get("/metrics/top-products")
 def top_products():
-    return get_top_products()
+    try:
+        return get_top_products()
+    except Exception as e:
+        return {
+            "success": False,
+            "error": "Unable to fetch top products.",
+            "details": str(e)
+        }
