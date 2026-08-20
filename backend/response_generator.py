@@ -79,7 +79,12 @@ def generate_response(question, ai_analysis, data):
         if not data:
             return "No profitable product data was found."
 
-        response = "Top 10 Most Profitable Products:\n\n"
+        limit = ai_analysis.get("limit")
+
+        if limit is None:
+            limit = len(data)
+
+        response = f"Top {len(data)} Most Profitable Products:\n\n"
 
         for index, item in enumerate(data, start=1):
 
@@ -88,6 +93,31 @@ def generate_response(question, ai_analysis, data):
                 f"   Revenue: ${item['revenue']:,.2f}\n"
                 f"   Profit: ${item['profit']:,.2f}\n"
                 f"   Profit Margin: {item['profit_margin']:.2f}%\n\n"
+            )
+
+        return response.strip()
+
+        # --------------------------------------------------
+    # Top Products by Revenue
+    # --------------------------------------------------
+
+    elif intent == "get_top_products":
+
+        if not data:
+            return "No product data was found."
+
+        limit = ai_analysis.get("limit")
+
+        if limit is None:
+            limit = len(data)
+
+        response = f"Top {len(data)} Products by Revenue:\n\n"
+
+        for index, item in enumerate(data, start=1):
+
+            response += (
+                f"{index}. {item['product']}\n"
+                f"   Revenue: ${item['revenue']:,.2f}\n\n"
             )
 
         return response.strip()
