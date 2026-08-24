@@ -5,6 +5,7 @@
 def generate_response(question, ai_analysis, data):
 
     intent = ai_analysis.get("intent")
+    limit = ai_analysis.get("limit")
 
     # --------------------------------------------------
     # Total Summary
@@ -79,12 +80,9 @@ def generate_response(question, ai_analysis, data):
         if not data:
             return "No profitable product data was found."
 
-        limit = ai_analysis.get("limit")
-
-        if limit is None:
-            limit = len(data)
-
-        response = f"Top {len(data)} Most Profitable Products:\n\n"
+        response = (
+            f"Top {len(data)} Most Profitable Products:\n\n"
+        )
 
         for index, item in enumerate(data, start=1):
 
@@ -97,7 +95,7 @@ def generate_response(question, ai_analysis, data):
 
         return response.strip()
 
-        # --------------------------------------------------
+    # --------------------------------------------------
     # Top Products by Revenue
     # --------------------------------------------------
 
@@ -106,12 +104,9 @@ def generate_response(question, ai_analysis, data):
         if not data:
             return "No product data was found."
 
-        limit = ai_analysis.get("limit")
-
-        if limit is None:
-            limit = len(data)
-
-        response = f"Top {len(data)} Products by Revenue:\n\n"
+        response = (
+            f"Top {len(data)} Products by Revenue:\n\n"
+        )
 
         for index, item in enumerate(data, start=1):
 
@@ -123,11 +118,49 @@ def generate_response(question, ai_analysis, data):
         return response.strip()
 
     # --------------------------------------------------
+    # Profit By Category
+    # --------------------------------------------------
+
+    elif intent == "get_profit_by_category":
+
+        if not data:
+            return "No category profit data was found."
+
+        response = "Profit by Category:\n\n"
+
+        for item in data:
+            response += (
+                f"- {item['category']}: "
+                f"${item['profit']:,.2f}\n"
+            )
+
+        return response.strip()
+
+    # --------------------------------------------------
+    # Revenue Trend
+    # --------------------------------------------------
+
+    elif intent == "get_revenue_trend":
+
+        if not data:
+            return "No revenue trend data was found."
+
+        response = "Revenue Trend:\n\n"
+
+        for item in data:
+            response += (
+                f"- {item['month']}: "
+                f"${item['revenue']:,.2f}\n"
+            )
+
+        return response.strip()
+
+    # --------------------------------------------------
     # Unknown Intent
     # --------------------------------------------------
 
     return (
         "Sorry, I could not understand your question. "
         "Please ask a question related to revenue, profit, "
-        "profit margin, regions, categories, or profitable products."
+        "profit margin, regions, categories, or products."
     )

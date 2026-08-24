@@ -65,10 +65,24 @@ def ask_metricmind(
     try:
 
         # --------------------------------------------------
+        # Validate Question Before AI Processing
+        # --------------------------------------------------
+
+        if not question or not question.strip():
+            return {
+                "success": False,
+                "question": question,
+                "answer": "Please enter a question."
+            }
+
+        question = question.strip()
+
+        # --------------------------------------------------
         # Step 1: AI understands the user's question
         # --------------------------------------------------
 
         result = run_metricmind_agent(question)
+
 
         # --------------------------------------------------
         # Step 2: Check if AI understood the question
